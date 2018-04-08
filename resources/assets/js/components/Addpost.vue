@@ -16,28 +16,24 @@
                         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 
 
-                        <li><label>Nom complet <span class="required">*</span></label><input name="nom" v-model="post.nom" v-validate="'required|alpha'" :class="{'input': true, 'is-danger': errors.has('nom') }"
+                        <li><label>Nom complet <span class="required">*</span></label><input name="nom" v-model="post.nom"
                                                                                              type="text" placeholder="Nom">
-                            <i v-show="errors.has('nom')" class="fa fa-warning"></i>
-                            <span v-show="errors.has('nom')" class="" style="color: red">{{ errors.first('nom') }}</span>&nbsp;<input class="form-control" placeholder="Prénom" v-model="post.prenom" required></input></li>
+                           &nbsp;<input class="form-control" placeholder="Prénom" v-model="post.prenom" required></input></li>
 
                         <li>
                             <label>Email <span class="required">*</span></label>
-                            <input class="form-control"  v-model="post.email" required
-                                   v-validate="'required|email'" :class="{'input': true, 'is-danger': errors.has('email') }" name="email" type="text" placeholder="Email">
-                            <span v-show="errors.has('email')" style="color: red" class="help is-danger">{{ errors.first('email') }}</span>                        </li>
+                            <input class="form-control"  v-model="post.email" required>
+                                                     </li>
                         <li>
                             <label>CNE <span class="required">*</span></label>
-                            <input name="cne" v-model="post.cne" v-validate="'required|numeric'" :class="{'input': true, 'is-danger': errors.has('cne') }"
+                            <input name="cne" v-model="post.cne"
                                    type="text" placeholder="CNE">
-                            <i v-show="errors.has('cne')" class="fa fa-warning"></i>
-                            <span v-show="errors.has('cne')" class="" style="color: red">{{ errors.first('cne') }}</span>
+
                         </li>
                         <li>
                             <label>CIN <span class="required">*</span></label>
                             <input class="form-control"  v-model="post.cin" required
-                                   v-validate="'required|alpha_num'" :class="{'input': true, 'is-danger': errors.has('cin') }" name="cin" type="text" placeholder="CIN">
-                            <span v-show="errors.has('cin')" class="help is-danger">{{ errors.first('cin') }}</span>
+                                 name="cin" type="text" placeholder="CIN">
                         </li>
                         <li>
                             <label>Téléphone</label>
@@ -86,6 +82,10 @@
                             <i v-show="errors.has('ville')" class="fa fa-warning"></i>
                             <span v-show="errors.has('ville')" class="" style="color: red">{{ errors.first('ville') }}</span>
                         </li>
+                        <div class="form-group">
+                            <label>Image</label>
+                            <input type="file" @change="imageChanged" :src="'http://localhost:8000/'+post.image"  class="form-control">
+                        </div>
 
                         <li>
                             <input type="submit" value="Submit" />
@@ -108,11 +108,9 @@
    // require('./css/bootstrap.min.css')
 
     import Vue from 'vue';
-    import VeeValidate from 'vee-validate';
-    Vue.use(VeeValidate);
     export default {
         data: function () {
-            return {post: {nom: '', prenom: '',email:'',cne:'',cin:'',telephone:'',promo:'',filiere:'',nationalite:'',pays:'',ville:''}}
+            return {post: {nom: '', prenom: '',email:'',cne:'',cin:'',telephone:'',promo:'',filiere:'',nationalite:'',pays:'',ville:'',image:''}}
         },
         methods: {
             createPost: function() {
@@ -128,7 +126,19 @@
                 $('#modal_theme_success').modal('hide')
 
             },
+            imageChanged(e){
+                console.log(e.target.files[0])
+                var fileReader=new FileReader()
+                fileReader.readAsDataURL(e.target.files[0])
+                fileReader.onload=(e)=>{
+                    this.post.image=e.target.result
+                }
+
+            }
 
         }
     }
 </script>
+<style>
+
+</style>

@@ -26,6 +26,8 @@ class CreateLaureatsTable extends Migration
             $table->string('nationalite');
             $table->string('pays');
             $table->string('ville');
+            $table->string('image')->nullable();
+
             $table->timestamps();
         });
     }

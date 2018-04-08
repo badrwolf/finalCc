@@ -12,10 +12,11 @@
 */
 
 Route::get('/', function () {
-    return view('ActVue');
+    return view('login');
 });
-Route::get('/add-act', function () {
-    return view('Addpost');
+
+Route::get('/ActVue', function () {
+    return view('ActVue');
 });
 
 

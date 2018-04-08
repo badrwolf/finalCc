@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Actualite;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ActualiteController extends Controller
@@ -13,6 +12,10 @@ class ActualiteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->$this->middleware('auth');
+    }
     public function home(){
         return view('ActVue');
     }

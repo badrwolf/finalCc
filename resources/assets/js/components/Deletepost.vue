@@ -1,29 +1,23 @@
 <template id="post-delete">
   <div>
 
-    <button @click="deletePost" data-toggle="modal" :data-target="toggleId" class="btn btn-danger btn-xs"><i  class="fa fa-trash-o" aria-hidden="true"></i>Delete</button>
+    <button @click="deletePost" data-toggle="modal" :data-target="'#'+toggleI" class="btn btn-danger btn-xs"><i  class="fa fa-trash-o" aria-hidden="true"></i>Delete</button>
     <div :id="toggleI" class="modal fade editmodale center ">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-          </div>
+        <div class="modal-dialog">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
 
-          <div class="modal-body">
+                    <div class="modal-header" align="center">
+                        <h3>Supprimer le laureat {{ post.nom  }}</h3>
+                           <form v-on:submit.prevent = "deletePost(post.id)">
+                               <p>êtes vous sure</p>
+                               <button class="btn btn-xs btn-danger" type="submit" name="button">Supprimer</button>
 
-                <h3>Supprimer le laureat {{ post.nom  }}</h3>
-                <form v-on:submit.prevent = "deletePost(post.id)">
-                  <p>êtes vous sure</p>
-                  <button class="btn btn-xs btn-danger" type="submit" name="button">Supprimer</button>
-
-                </form>
-              </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
-      </div>
+                            </form>
+                    </div>
+        </div>
     </div>
-  </div>
   </div>
 
 
@@ -31,7 +25,6 @@
 
 
 <script>
-    require('./css/del.css')
   //  require('./css/bootstrap.min.css')
     export default {
         props: [

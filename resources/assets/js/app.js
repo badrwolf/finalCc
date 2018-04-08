@@ -4,13 +4,11 @@ window.Vue = require('vue');
 
 window.VueRouter=require('vue-router').default;
 
-
 window.Axios=require('axios').default;
 
 let AppLayout= require('./components/App.vue');
-    // show the list post template
+// show the list post template
 const Listposts=Vue.component('Listposts', require('./components/Listposts.vue'));
-const login=Vue.component('login', require('./components/login.vue'));
 
 // add post template
 const Addpost =Vue.component('Addpost', require('./components/Addpost.vue'));
@@ -38,22 +36,12 @@ Vue.use(VueRouter, Axios, axios);
 
 const routes = [
     {
-        path: '/login',
-
-        name: 'login',
-
-        component: login,
-        meta: {
-
-            auth: false
-
+        path: '/',
+        components: {
+            articlesIndex: Listacts
         }
     },
-    {
-        name: 'Listacts',
-        path: '/',
-        component: Listacts
-    },
+
     {
         name: 'Listposts',
         path: '/vueApp',
@@ -77,7 +65,7 @@ const routes = [
         path: '/edit/:id',
         component: Editpost
     },
-   {
+    {
         name: 'Editact',
         path: '/edit/:id',
         component: Editact
@@ -105,7 +93,7 @@ const routes = [
     }
 ];
 const router = new VueRouter({ mode: 'history', routes: routes});
-
+import Vue from 'vue'
 new Vue(
     Vue.util.extend(
         { router, },

@@ -11,7 +11,10 @@ class LaureatController extends Controller
      *
      * @return IlluminateHttpResponse
      */
-
+    public function __construct()
+    {
+        $this->$this->middleware('auth');
+    }
     public function home(){
         return view('vueApp');
     }
@@ -54,7 +57,21 @@ class LaureatController extends Controller
 
 
         ]);
-        $create = laureat::create($request->all());
+        \Log::info($request->all());
+        $exploded=explode(',',$request->image);
+        $decoded=base64_decode($exploded[1]);
+        if(str_contains($exploded[0],'jpeg')){
+            $exte='png';
+        }else{
+            $exte='jpg';
+        }
+        $filename=str_random().'.'.$exte;
+        $path=public_path().'/'.$filename;
+        file_put_contents($path,$decoded);
+
+
+        $create = laureat::create($request->except('image')+[
+                'image'=>$filename]);
         return response()->json(['status' => 'success','msg'=>'post created successfully']);
 
     }
@@ -98,10 +115,23 @@ class LaureatController extends Controller
             'cne' => 'required',
             'promo' => 'required',
         ]);
+        \Log::info($request->all());
+        $exploded=explode(',',$request->image);
+        $decoded=base64_decode($exploded[1]);
+        if(str_contains($exploded[0],'jpeg')){
+            $exte='png';
+        }else{
+            $exte='jpg';
+        }
+        $filename=str_random().'.'.$exte;
+        $path=public_path().'/'.$filename;
+        file_put_contents($path,$decoded);
 
         $post = laureat::find($id);
         if($post->count()){
-            $post->update($request->all());
+            $post->update($request->except('image')+[
+                    'image'=>$filename
+                ]);
             return response()->json(['statur'=>'success','msg'=>'Post updated successfully']);
         } else {
             return response()->json(['statur'=>'error','msg'=>'error in updating post']);

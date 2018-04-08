@@ -147,8 +147,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
         Intervention\Image\ImageServiceProvider::class,
-        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
-        /*
+        Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,        /*
          * Package Service Providers...
          */
 
@@ -211,6 +210,6 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         'Image' => Intervention\Image\Facades\Image::class,
         'JWTAuth' => Tymon\JWTAuth\Facades\JWTAuth::class,
-    ],
+        'JWTFactory' => Tymon\JWTAuth\Facades\JWTFactory::class,        ],
 
 ];

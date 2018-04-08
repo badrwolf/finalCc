@@ -10,6 +10,9 @@
                     </div>
 
                     <div class="modal-body">
+                        <div class="modal-header" align="center">
+                            <img :src="'http://localhost:8000/'+post.image" style="display:block;" width="30%" height="30%" class="img"/>
+                        </div>
 
                         <ul class="form-style-1">
                             <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -123,6 +126,8 @@
 </script>
 
 <style type="text/css">
+    /*@import 'bootstrap.min.css';*/
+
     .form-style-1 {
         margin:10px auto;
         max-width: 400px;

@@ -1,7 +1,7 @@
-<template id="Deletepost">
+<template>
     <div class="row">
         <div class="pull-right">
-            <button data-toggle="modal" data-target="#modal_theme_success">
+            <button data-toggle="modal" data-target="#modal_theme_success" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span>
                 Ajouter Laureat
             </button>
@@ -34,10 +34,12 @@
                     <Viewpost :key="post.prenom" :post="post"/>
                         </td>
                         <td>
-                    <Deletepost :key="post.nom" :post="post"  @change-parent="deletePost(index)"/>
+                    <Deletepost :key="post.nom" :post="post"  @change-parent="deletePost(post.nom,post.prenom,index)"/>
                         </td>
                         <td>
-                    <Editpost :key="post.id" :initialPost="post"  @changed="changed"/>
+                  <Editpost :key="post.id" :initialPost="post"  @changed="changed()"/>
+                           <!-- <router-link class="btn btn-warning btn-xs" v-bind:to="{name: 'Editpost', params: {id: post.id}}"><i class="fa fa-eye" aria-hidden="true"></i>Edit</router-link>-->
+
                         </td>
                     </table>
 
@@ -66,7 +68,6 @@
     import Viewpost from './Viewpost';
     import Deletepost from './Deletepost';
     import Editpost from './Editpost';
-
     export default {
         components:
             {
@@ -83,6 +84,7 @@
                 posts: {
                     nom: '',
                     prenom: '',
+                    email:'',
                     cne: '',
                     cin: '',
                     telephone: '',
@@ -90,12 +92,14 @@
                     filiere: '',
                     nationalite: '',
                     pays: '',
-                    ville: ''
+                    ville: '',
+                    image:''
                 }
             };
         },
         created: function () {
             let uri = 'http://localhost:8000/laureats/';
+
             Axios.get(uri).then((response) => {
                 this.posts = response.data;
             });
@@ -120,32 +124,44 @@
                 const post = pay.post;
 
                this.posts.unshift(post);
+                swal("Ajout de "+" "+"<"+post.nom+" "+post.prenom+">","  avec succes")
 
             },
 
-            deletePost(index){
+            deletePost(nom,prenom,image,index){
                 this.posts.splice(index,1)
 
-                swal("Suppression de","avec succes","succes")
+                swal("Suppression de"+" "+nom+" "+prenom," avec succes")
             },
-                changed(pay){
+                changed(){
                     let uri = 'http://localhost:8000/laureats/';
                     Axios.get(uri).then((response) => {
                         this.posts = response.data;
                     });
+                   // this.post.image=pay.target.result
+                    swal("Modification"," avec succes")
+                    /*console.log(e.target.files[0])
+                    var fileReader=new FileReader()
+                    fileReader.readAsDataURL(e.target.files[0])
+                    fileReader.onload=(e)=>{
+                        this.post.image=e.target.result
+                    }*/
                 },
 
 
 
-        }
 
 
-    }
+
+
+
+    }}
 
 
 </script>
 
-<style>
+<style lang="scss">
+    @import '/css/bootstrap.min.css';
     .center {
         margin: auto;
         width: 50%;
@@ -154,4 +170,6 @@
         background: white;
 
     }
+
+
 </style>

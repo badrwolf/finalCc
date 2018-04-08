@@ -3,7 +3,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
 
         <h3>Ajouter Actualité</h3>
-        <form v-on:submit.prevent = "createAct">
+        <form v-on:submit.prevent = "createAct(post.titre)">
             <div class="form-group">
                 <label>Titre</label>
                 <input name="titre" v-model="post.titre"
@@ -31,9 +31,7 @@
     require('./css/del.css')
 
     import Vue from 'vue';
-    import VeeValidate from 'vee-validate';
     import { VueEditor } from 'vue2-editor'
-    Vue.use(VeeValidate);
     export default {
         components: {
             VueEditor
@@ -46,12 +44,14 @@
         methods: {
 
 
-            createAct: function() {
+            createAct: function(titre) {
                 let uri = 'http://localhost:8000/actualites/';
                 Axios.post(uri, this.post).then((response) => {
 
                     this.$router.push({name: 'Listacts'})
                 })
+                swal("Ajout de  "+" "+titre," avec succes","succes")
+
 
             },
             imageChanged(e){

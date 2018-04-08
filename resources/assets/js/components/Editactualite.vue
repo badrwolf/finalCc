@@ -1,7 +1,7 @@
 <template id="edit/:id">
     <div>
         <h3>Modifier l'actualité</h3>
-        <form v-on:submit.prevent = "updateAct">
+        <form v-on:submit.prevent = "updateAct(act.titre)">
             <div class="form-group">
                 <label>Titre</label>
                 <input name="titre" v-model="act.titre" type="text" placeholder="titre">
@@ -12,9 +12,11 @@
             </div>
             <div class="form-group">
                 <label>Image</label>
+                <img :src="'http://localhost:8000/'+act.image" style="display:block;" width="20%" height="20%" class="img"/>
+
                 <input type="file" @change="imageChanged" class="form-control">
             </div>
-            <button type="submit" class="btn btn-xs btn-primary">Créer Actualité</button>
+            <button type="submit" class="btn btn-xs btn-primary">Modifier Actualité</button>
             <router-link class="btn btn-xs btn-warning" v-bind:to="'/'">Cancel</router-link>
         </form>
     </div>
@@ -40,11 +42,13 @@
             });
         },
         methods: {
-            updateAct: function() {
+            updateAct: function(titre) {
                 let uri = 'http://localhost:8000/actualites/'+this.$route.params.id;
                 Axios.patch(uri, this.act).then((response) => {
                     this.$router.push({name: 'Listacts'})
                 })
+                swal("Modification de "+" "+titre," avec succes")
+
             },
             imageChanged(e){
                 console.log(e.target.files[0])
